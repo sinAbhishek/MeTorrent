@@ -14,7 +14,6 @@ app.use(express.json());
 // Register signaling routes
 signaling(io);
 
-// File API
 app.post("/api/files/register", (req, res) => {
   const { fileHash, fileName, fileChunks, peerId } = req.body;
 
