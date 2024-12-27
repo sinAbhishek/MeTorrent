@@ -8,10 +8,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*" } });
 
-// Middleware
 app.use(express.json());
 
-// Register signaling routes
 signaling(io);
 
 app.post("/api/files/register", (req, res) => {
