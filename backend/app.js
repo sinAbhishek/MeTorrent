@@ -40,7 +40,7 @@ app.get("/api/files/:fileHash/peers", (req, res) => {
 
   res.status(200).json({ peers: files[fileHash].peers });
 });
-// Start server
+
 const PORT = process.env.PORT || 4000;
 server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
