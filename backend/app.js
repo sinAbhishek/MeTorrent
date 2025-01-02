@@ -38,6 +38,11 @@ app.get("/api/files/:fileHash/peers", (req, res) => {
   res.status(200).json({ peers: files[fileHash].peers });
 });
 
+const selectedPeers = {}; // Map of chunkIndex -> peerId
+for (let chunkIndex in chunkMetadata) {
+  selectedPeers[chunkIndex] = chunkMetadata[chunkIndex][0]; // Choose the first peer
+}
+
 const PORT = process.env.PORT || 4000;
 server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
