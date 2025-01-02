@@ -15,8 +15,3 @@ app.post("/api/files/chunks/register", (req, res) => {
 
   res.status(200).json({ message: "Chunk registered successfully" });
 });
-
-app.get("/api/files/:fileHash/chunks", (req, res) => {
-  const { fileHash } = req.params;
-  res.status(200).json(files[fileHash]?.chunks || {});
-});
