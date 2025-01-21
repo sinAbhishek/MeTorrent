@@ -1,35 +1,36 @@
-const { peers } = require("./db");
+const {
+  addChunks,
+  getPeersForChunk,
+  removePeerChunks,
+} = require("./chunkRegistry");
 
-module.exports = (io) => {
+function setupSignaling(io) {
+  const peers = {}; // { peerId: socket }
+
   io.on("connection", (socket) => {
-    console.log(`Peer connected: ${socket.id}`);
+    const peerId = socket.id;
+    console.log(`Peer connected: ${peerId}`);
+    peers[peerId] = socket;
 
-    // Peer joins with an ID
-    socket.on("register-peer", ({ peerId, metadata }) => {
-      peers[peerId] = { socketId: socket.id, metadata };
-      console.log(`Peer registered: ${peerId}`);
+    // Register chunks for a file
+    socket.on("register-chunks", ({ fileId, chunks }) => {
+      addChunks(peerId, fileId, chunks);
+      console.log(`Chunks registered by ${peerId}:`, { fileId, chunks });
     });
 
-    // Handle signaling data (SDP or ICE candidates)
-    socket.on("signal", ({ targetPeerId, signalData }) => {
-      const targetPeer = peers[targetPeerId];
-      if (targetPeer) {
-        io.to(targetPeer.socketId).emit("signal", {
-          senderPeerId: socket.id,
-          signalData,
-        });
-      }
+    // Request peers for a chunk
+    socket.on("request-chunk", ({ fileId, chunkIndex }, callback) => {
+      const peersWithChunk = getPeersForChunk(fileId, chunkIndex);
+      callback(peersWithChunk);
     });
 
-    // Remove peer on disconnect
+    // Handle peer disconnection
     socket.on("disconnect", () => {
-      const peerId = Object.keys(peers).find(
-        (id) => peers[id].socketId === socket.id
-      );
-      if (peerId) {
-        delete peers[peerId];
-        console.log(`Peer disconnected: ${peerId}`);
-      }
+      console.log(`Peer disconnected: ${peerId}`);
+      removePeerChunks(peerId);
+      delete peers[peerId];
     });
   });
-};
+}
+
+module.exports = { setupSignaling };
