@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-
+import socket from "./socket";
 const socket = io("http://localhost:4000");
 const peerConnections = {};
 const dataChannels = {};
