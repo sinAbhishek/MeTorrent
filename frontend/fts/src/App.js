@@ -7,6 +7,7 @@ const chunkSize = 64 * 1024; // 64KB per chunk (example)
 const App = () => {
   const [file, setFile] = useState(null);
   const [chunks, setChunks] = useState([]);
+  const [downloadid, setdownloadId] = useState(null);
   const [downloadedChunks, setDownloadedChunks] = useState([]);
   const [fileId] = useState(() => Date.now().toString()); // Unique file ID
   const [peerList, setPeerList] = useState([]);
@@ -33,9 +34,16 @@ const App = () => {
 
   const handleDownload = () => {
     // Request peers for each chunk
-    const chunkIndices = chunks.map((_, i) => i);
-    socket.emit("get-peers-for-chunks", fileId, chunkIndices);
+    socket.emit("send indices", downloadid);
+    socket.on("getting indices", (chunkindices) => {
+      console.log(chunkindices);
+      const chunkIndices = chunkindices.map((_, i) => i);
+      socket.emit("get-peers-for-chunks", downloadid, chunkIndices);
+    });
+    // const chunkIndices = chunks.map((_, i) => i);
+    // socket.emit("get-peers-for-chunks", downloadid, chunkIndices);
     socket.on("peer-list-for-chunks", (peersForChunks) => {
+      console.log(peersForChunks);
       peersForChunks.forEach((peers, index) => {
         if (peers.length > 0) {
           const peerId = peers[0]; // Select the first peer with the chunk
@@ -74,11 +82,15 @@ const App = () => {
     // Revoke the URL to release memory
     URL.revokeObjectURL(url);
   };
-
+  const providefileid = (e) => {
+    setdownloadId(e.target.value);
+    console.log(typeof e.target.value);
+  };
   return (
     <div>
       <h1>Decentralized File Sharing</h1>
       <input type="file" onChange={handleFileUpload} />
+      <input type="text" onChange={providefileid} />
       <button onClick={handleDownload}>Download</button>
       <button onClick={combineChunks}>Combine & Download</button>
     </div>

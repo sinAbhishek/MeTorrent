@@ -46,5 +46,15 @@ function removePeerChunks(peerId) {
     }
   });
 }
+function sendindices(fileid) {
+  console.log(fileid);
+  return Object.keys(chunkRegistry[fileid]);
+}
 
-module.exports = { addChunks, getPeersForChunk, removePeerChunks };
+module.exports = {
+  addChunks,
+  getPeersForChunk,
+  removePeerChunks,
+  sendindices,
+  chunkRegistry,
+};
