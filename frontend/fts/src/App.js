@@ -33,7 +33,6 @@ const App = () => {
   };
 
   const handleDownload = () => {
-    // Request peers for each chunk
     socket.emit("send indices", downloadid);
     socket.on("getting indices", (chunkindices) => {
       console.log(chunkindices);
