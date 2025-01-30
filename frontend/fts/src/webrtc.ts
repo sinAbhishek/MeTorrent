@@ -1,12 +1,12 @@
 import io from "socket.io-client";
 import socket from "./socket";
-// const socket = io("http://localhost:4000");
-const peerConnections = {};
-const dataChannels = {};
-const receivedChunks = {};
+
+const peerConnections: Record<string, RTCPeerConnection> = {};
+const dataChannels: Record<string, RTCDataChannel> = {};
+const receivedChunks: Record<number, Blob> = {};
 const chunkSize = 64 * 1024; // 64 KB
 
-export const createPeerConnection = (peerId) => {
+export const createPeerConnection = (peerId: string): RTCPeerConnection => {
   const peerConnection = new RTCPeerConnection();
 
   peerConnection.onicecandidate = (event) => {
@@ -15,21 +15,21 @@ export const createPeerConnection = (peerId) => {
     }
   };
 
-  socket.on("ice-candidate", ({ candidate }) => {
+  socket.on("ice-candidate", ({ candidate }: { candidate: RTCIceCandidateInit }) => {
     peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
   });
 
   return peerConnection;
 };
 
-export const requestChunk = async (peerId, chunkIndex) => {
+export const requestChunk = async (peerId: string, chunkIndex: number): Promise<Blob> => {
   return new Promise((resolve) => {
     const peerConnection = createPeerConnection(peerId);
 
     peerConnection.ondatachannel = (event) => {
       const receiveChannel = event.channel;
       receiveChannel.onmessage = (e) => {
-        resolve(e.data); // Resolve with the received chunk
+        resolve(e.data as Blob); // Resolve with the received chunk
       };
     };
 
