@@ -19,7 +19,6 @@ const App: React.FC = () => {
 
     setFile(selectedFile);
 
-    // Split file into chunks
     const fileChunks: Blob[] = [];
     const chunkCount = Math.ceil(selectedFile.size / chunkSize);
     for (let i = 0; i < chunkCount; i++) {
@@ -28,7 +27,6 @@ const App: React.FC = () => {
     }
     setChunks(fileChunks);
 
-    // Register chunks with the backend
     socket.emit("register-chunks", {
       fileId,
       chunks: fileChunks.map((_, i) => i),
@@ -76,7 +74,10 @@ const App: React.FC = () => {
       alert("Download incomplete!");
       return;
     }
-
+    // const a = document.createElement("a");
+    // a.href = url;
+    // a.download = file.name;
+    // a.click();
     // Combine chunks into a single Blob
     const fileBlob = new Blob(downloadedChunks as Blob[], { type: file.type });
     const url = URL.createObjectURL(fileBlob);
