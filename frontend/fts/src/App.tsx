@@ -74,10 +74,6 @@ const App: React.FC = () => {
       alert("Download incomplete!");
       return;
     }
-    // const a = document.createElement("a");
-    // a.href = url;
-
-    // a.click();
 
     const fileBlob = new Blob(downloadedChunks as Blob[], { type: file.type });
     const url = URL.createObjectURL(fileBlob);
