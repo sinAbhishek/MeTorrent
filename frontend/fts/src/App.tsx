@@ -76,7 +76,7 @@ const App: React.FC = () => {
     }
     // const a = document.createElement("a");
     // a.href = url;
-    // a.download = file.name;
+
     // a.click();
 
     const fileBlob = new Blob(downloadedChunks as Blob[], { type: file.type });
