@@ -78,7 +78,7 @@ const App: React.FC = () => {
     // a.href = url;
     // a.download = file.name;
     // a.click();
-    // Combine chunks into a single Blob
+
     const fileBlob = new Blob(downloadedChunks as Blob[], { type: file.type });
     const url = URL.createObjectURL(fileBlob);
 
