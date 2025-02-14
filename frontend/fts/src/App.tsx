@@ -47,7 +47,7 @@ const App: React.FC = () => {
     socket.on("peer-list-for-chunks", (peersForChunks: string[][]) => {
       peersForChunks.forEach((peers, index) => {
         if (peers.length > 0) {
-          const peerId = peers[0]; // Select the first peer with the chunk
+          const peerId = peers[0];
           requestChunk(peerId, index).then((chunk) => {
             setDownloadedChunks((prev) => {
               const updatedChunks = [...prev];
