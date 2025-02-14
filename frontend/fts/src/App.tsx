@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { createPeerConnection, requestChunk } from "./webrtc";
-import socket from "./socket"; // Assuming socket is initialized
+import socket from "./socket";
 
-const chunkSize = 64 * 1024; // 64KB per chunk (example)
+const chunkSize = 64 * 1024;
 
 const App: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
