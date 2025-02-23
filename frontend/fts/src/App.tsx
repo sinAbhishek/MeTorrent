@@ -11,7 +11,7 @@ const App: React.FC = () => {
   const [downloadedChunks, setDownloadedChunks] = useState<
     (Blob | undefined)[]
   >([]);
-  const [fileId] = useState<string>(() => Date.now().toString()); // Unique file ID
+  const [fileId] = useState<string>(() => Date.now().toString());
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
