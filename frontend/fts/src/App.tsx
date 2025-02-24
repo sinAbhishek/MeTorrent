@@ -66,7 +66,6 @@ const App: React.FC = () => {
       return;
     }
 
-    // Ensure all chunks are downloaded
     if (
       downloadedChunks.length !== chunks.length ||
       downloadedChunks.includes(undefined)
