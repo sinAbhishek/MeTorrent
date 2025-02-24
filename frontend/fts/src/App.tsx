@@ -77,13 +77,11 @@ const App: React.FC = () => {
     const fileBlob = new Blob(downloadedChunks as Blob[], { type: file.type });
     const url = URL.createObjectURL(fileBlob);
 
-    // Create a download link
     const a = document.createElement("a");
     a.href = url;
     a.download = file.name;
     a.click();
 
-    // Revoke the URL to release memory
     URL.revokeObjectURL(url);
   };
 
