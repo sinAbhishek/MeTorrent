@@ -29,7 +29,7 @@ export const requestChunk = async (peerId: string, chunkIndex: number): Promise<
     peerConnection.ondatachannel = (event) => {
       const receiveChannel = event.channel;
       receiveChannel.onmessage = (e) => {
-        resolve(e.data as Blob); // Resolve with the received chunk
+        resolve(e.data as Blob);
       };
     };
 
