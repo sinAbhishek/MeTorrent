@@ -1,7 +1,7 @@
 const chunkRegistry = {}; // { fileId: { chunkIndex: [peerId, ...] } }
 
 /**
- * Registers chunks for a specific peer and file.
+
  * @param {string} peerId
  * @param {string} fileId
  * @param {number[]} chunks
