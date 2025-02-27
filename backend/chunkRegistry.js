@@ -2,9 +2,9 @@ const chunkRegistry = {}; // { fileId: { chunkIndex: [peerId, ...] } }
 
 /**
  * Registers chunks for a specific peer and file.
- * @param {string} peerId - The ID of the peer.
- * @param {string} fileId - The ID of the file.
- * @param {number[]} chunks - The list of chunk indices.
+ * @param {string} peerId
+ * @param {string} fileId
+ * @param {number[]} chunks
  */
 function addChunks(peerId, fileId, chunks) {
   if (!chunkRegistry[fileId]) chunkRegistry[fileId] = {};
