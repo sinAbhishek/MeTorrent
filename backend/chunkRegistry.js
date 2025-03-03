@@ -18,7 +18,7 @@ function addChunks(peerId, fileId, chunks) {
 }
 
 /**
- * Gets a list of peers that have a specific chunk.
+
  * @param {string} fileId - The ID of the file.
  * @param {number} chunkIndex - The chunk index.
  * @returns {string[]} - A list of peer IDs.
