@@ -28,7 +28,7 @@ function getPeersForChunk(fileId, chunkIndex) {
 }
 
 /**
- * Removes all chunks associated with a peer.
+
  * @param {string} peerId - The ID of the peer.
  */
 function removePeerChunks(peerId) {
