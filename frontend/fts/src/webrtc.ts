@@ -1,6 +1,6 @@
 import io from "socket.io-client";
 import socket from "./socket";
-
+//incomplete
 const peerConnections: Record<string, RTCPeerConnection> = {};
 const dataChannels: Record<string, RTCDataChannel> = {};
 const receivedChunks: Record<number, Blob> = {};
