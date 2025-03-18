@@ -43,7 +43,6 @@ const App: React.FC = () => {
     });
     console.log("Chunks registered with backend for file ID:", fileId);
 
-    // Set up data channel handler for incoming chunk requests
     setupDataChannelHandler(fileId, fileChunks);
   };
 
